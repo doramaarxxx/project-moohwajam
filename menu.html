@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>메뉴 | 무화잠 MOOHWAJAM</title>
+  <meta name="description" content="무화잠 메뉴 - VIP 코스, 대게·킹크랩·랍스타, 일품요리, 점심특선">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* Menu Page Specific Styles */
+    .menu-page {
+      background-color: var(--bg-cream);
+    }
+
+    /* Menu Header */
+    .menu-page-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(217, 212, 203, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .menu-back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-dark);
+      transition: opacity var(--transition-base);
+    }
+
+    .menu-back-link:hover {
+      opacity: 0.6;
+    }
+
+    .menu-back-link svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .menu-page-logo {
+      font-size: 28px;
+      color: var(--primary);
+      font-weight: 300;
+    }
+
+    .menu-reserve-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      background-color: var(--white);
+      border: 1px solid var(--text-dark);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dark);
+      overflow: hidden;
+      z-index: 1;
+      transition: color 0.6s ease;
+    }
+
+    .menu-reserve-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      background-color: var(--text-dark);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.6s ease;
+      z-index: -1;
+    }
+
+    .menu-reserve-btn:hover::before {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .menu-reserve-btn:hover {
+      color: var(--white);
+    }
+
+    /* Menu Hero */
+    .menu-hero {
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .menu-hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .menu-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(217, 212, 203, 0.3), rgba(217, 212, 203, 0.9));
+    }
+
+    .menu-hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .menu-hero-subtitle {
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .menu-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(60px, 12vw, 140px);
+      font-weight: 300;
+      color: var(--text-dark);
+      letter-spacing: 0.05em;
+    }
+
+    .menu-hero-desc {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-top: 40px;
+      max-width: 600px;
+    }
+
+    /* Menu Content */
+    .menu-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 40px 120px;
+    }
+
+    /* Category Section */
+    .menu-category {
+      display: flex;
+      gap: 60px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-category:last-child {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    /* Left Side - Category Title (Sticky) */
+    .category-left {
+      flex: 0 0 380px;
+      width: 380px;
+      min-width: 380px;
+      padding: 80px 0;
+    }
+
+    .category-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--text-dark);
+      margin-bottom: 24px;
+    }
+
+    .category-desc {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      max-width: 300px;
+    }
+
+    /* Right Side - Menu Items */
+    .category-right {
+      flex: 1;
+      padding: 80px 0;
+      border-left: 1px solid rgba(0, 0, 0, 0.1);
+      padding-left: 60px;
+    }
+
+    .menu-items-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+    }
+
+    .menu-item-card {
+      padding: 32px 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      transition: background-color var(--transition-base);
+    }
+
+    .menu-item-card:hover {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .menu-item-card:nth-child(odd) {
+      border-right: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .menu-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .menu-item-name {
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--text-dark);
+    }
+
+    .menu-item-name .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 6px;
+    }
+
+    .menu-item-price {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-dark);
+      white-space: nowrap;
+    }
+
+    .menu-item-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* Course Menu Style */
+    .course-item {
+      padding: 40px 24px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .course-item:last-child {
+      border-bottom: none;
+    }
+
+    .course-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .course-name {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-dark);
+    }
+
+    .course-name-en {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .course-price {
+      text-align: right;
+    }
+
+    .course-price .price {
+      font-size: 22px;
+      font-weight: 600;
+      color: #c9a227;
+    }
+
+    .course-price .unit {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .course-menu-list {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .course-note {
+      font-size: 13px;
+      color: var(--text-muted);
+      opacity: 0.8;
+    }
+
+    .course-images {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .course-images img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .menu-category {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .category-left {
+        flex: none;
+        width: 100%;
+        min-width: unset;
+        padding: 60px 0 30px;
+      }
+
+      .category-right {
+        border-left: none;
+        padding-left: 0;
+        padding-top: 0;
+      }
+
+      .menu-items-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-item-card:nth-child(odd) {
+        border-right: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .menu-page-header {
+        padding: 16px 20px;
+      }
+
+      .menu-content {
+        padding: 40px 20px 80px;
+      }
+
+      .category-title {
+        font-size: 40px;
+      }
+
+      .course-images {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="menu-page">
+  <!-- Header -->
+  <header class="menu-page-header">
+    <a href="index.html" class="menu-back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      <span>Back</span>
+    </a>
+    <a href="index.html" class="menu-page-logo">潛</a>
+    <a href="reservation.html" class="menu-reserve-btn">예약하기</a>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="menu-hero">
+    <div class="menu-hero-bg">
+      <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=1920" alt="Menu background">
+      <div class="menu-hero-overlay"></div>
+    </div>
+    <div class="menu-hero-content">
+      <p class="menu-hero-subtitle">TASTE OF KOREA</p>
+      <h1 class="menu-hero-title">MENU</h1>
+      <p class="menu-hero-desc">정성으로 빚은 한 끼, 계절의 맛을 담았습니다.</p>
+    </div>
+  </section>
+
+  <!-- Menu Content -->
+  <main class="menu-content">
+
+    <!-- VIP Course -->
+    <section class="menu-category" id="vip-course">
+      <div class="category-left">
+        <div class="category-sticky">
+          <h2 class="category-title">VIP<br>Course</h2>
+          <p class="category-desc">귀한 분을 모시는 마음을 담아 품격까지 높여드리는 무화잠의 특별 추천 메뉴입니다.</p>
+        </div>
+      </div>
+      <div class="category-right">
+        <div class="course-item">
+          <div class="course-header">
+            <div>
+              <h3 class="course-name">VIP A 코스</h3>
+              <p class="course-name-en">MOOHWAJAM VIP Course A</p>
+            </div>
+            <div class="course-price">
+              <span class="price">₩155,000</span>
+              <span class="unit">1인분</span>
+            </div>
+          </div>
+          <p class="course-menu-list">죽 + 계절샐러드 + 특사시미 + 게다리사시미 + 해산물모듬 + 대게찜 + 낙지초무침 + 겨자냉채 + 들깨탕 + 게다리스테이크 + 꽃게매운탕&게정밥 + 후식차</p>
+          <p class="course-note">※ 인분수로 주문하시는 메뉴입니다. 코스 메뉴는 계절에 따라 내용이 변경될 수 있습니다.</p>
+        </div>
+
+        <div class="course-item">
+          <div class="course-header">
+            <div>
+              <h3 class="course-name">VIP B 코스</h3>
+              <p class="course-name-en">MOOHWAJAM VIP Course B</p>
+            </div>
+            <div class="course-price">
+              <span class="price">₩185,000</span>
+              <span class="unit">1인분</span>
+            </div>
+          </div>
+          <p class="course-menu-list">죽 + 계절샐러드 + 특사시미 + 게다리사시미 + 랍스타사시미 + 해산물모듬 + 대게찜 + 낙지초무침 + 겨자냉채 + 들깨탕 + 게다리스테이크 + 랍스타구이 + 꽃게매운탕&게정밥 + 후식차</p>
+          <p class="course-note">※ 인분수로 주문하시는 메뉴입니다. 코스 메뉴는 계절에 따라 내용이 변경될 수 있습니다.</p>
+        </div>
+
+        <div class="course-item">
+          <div class="course-header">
+            <div>
+              <h3 class="course-name">VIP C 코스</h3>
+              <p class="course-name-en">MOOHWAJAM VIP Course C</p>
+            </div>
+            <div class="course-price">
+              <span class="price">₩220,000</span>
+              <span class="unit">1인분</span>
+            </div>
+          </div>
+          <p class="course-menu-list">죽 + 계절샐러드 + 특사시미 + 게다리사시미 + 랍스타사시미 + 해산물모듬 + 킹크랩찜 + 낙지초무침 + 겨자냉채 + 들깨탕 + 게다리스테이크 + 랍스타구이 + 꽃게매운탕&게정밥 + 후식차</p>
+          <p class="course-note">※ 인분수로 주문하시는 메뉴입니다. 코스 메뉴는 계절에 따라 내용이 변경될 수 있습니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Crab & Lobster -->
+    <section class="menu-category" id="crab-lobster">
+      <div class="category-left">
+        <div class="category-sticky">
+          <h2 class="category-title">대게<br>킹크랩<br>랍스타</h2>
+          <p class="category-desc">신선한 해산물의 진수를 느낄 수 있는 프리미엄 코스 요리입니다.</p>
+        </div>
+      </div>
+      <div class="category-right">
+        <div class="course-item">
+          <div class="course-header">
+            <div>
+              <h3 class="course-name">대게 코스</h3>
+              <p class="course-name-en">Snow Crab Course</p>
+            </div>
+            <div class="course-price">
+              <span class="price">₩120,000</span>
+              <span class="unit">1인분</span>
+            </div>
+          </div>
+          <p class="course-menu-list">죽 + 계절샐러드 + 사시미 + 대게찜 + 게다리버터구이 + 겨자냉채 + 꽃게매운탕&게정밥 + 후식차</p>
+          <p class="course-note">※ 인분수로 주문하시는 메뉴입니다.</p>
+        </div>
+
+        <div class="course-item">
+          <div class="course-header">
+            <div>
+              <h3 class="course-name">킹크랩 코스</h3>
+              <p class="course-name-en">King Crab Course</p>
+            </div>
+            <div class="course-price">
+              <span class="price">₩180,000</span>
+              <span class="unit">1인분</span>
+            </div>
+          </div>
+          <p class="course-menu-list">죽 + 계절샐러드 + 사시미 + 킹크랩찜 + 킹크랩버터구이 + 겨자냉채 + 들깨탕 + 꽃게매운탕&게정밥 + 후식차</p>
+          <p class="course-note">※ 인분수로 주문하시는 메뉴입니다.</p>
+        </div>
+
+        <div class="course-item">
+          <div class="course-header">
+            <div>
+              <h3 class="course-name">랍스타 코스</h3>
+              <p class="course-name-en">Lobster Course</p>
+            </div>
+            <div class="course-price">
+              <span class="price">₩150,000</span>
+              <span class="unit">1인분</span>
+            </div>
+          </div>
+          <p class="course-menu-list">죽 + 계절샐러드 + 랍스타사시미 + 해산물모듬 + 랍스타찜 + 랍스타버터구이 + 겨자냉채 + 꽃게매운탕&게정밥 + 후식차</p>
+          <p class="course-note">※ 인분수로 주문하시는 메뉴입니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- A La Carte -->
+    <section class="menu-category" id="a-la-carte">
+      <div class="category-left">
+        <div class="category-sticky">
+          <h2 class="category-title">일품요리</h2>
+          <p class="category-desc">정성껏 준비한 단품 요리로 특별한 맛을 경험하세요.</p>
+        </div>
+      </div>
+      <div class="category-right">
+        <div class="menu-items-grid">
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">생게장</h4>
+              <span class="menu-item-price">시가</span>
+            </div>
+            <p class="menu-item-desc">신선한 게를 특제 간장에 담가 숙성시킨 무화잠의 시그니처</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">양념게장</h4>
+              <span class="menu-item-price">시가</span>
+            </div>
+            <p class="menu-item-desc">매콤달콤한 양념에 버무린 밥도둑</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">낙지볶음</h4>
+              <span class="menu-item-price">₩45,000</span>
+            </div>
+            <p class="menu-item-desc">쫄깃한 낙지를 매콤하게 볶아낸 요리</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">해물파전</h4>
+              <span class="menu-item-price">₩35,000</span>
+            </div>
+            <p class="menu-item-desc">바삭하게 부친 해물파전</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">전복버터구이</h4>
+              <span class="menu-item-price">₩50,000</span>
+            </div>
+            <p class="menu-item-desc">신선한 전복을 버터에 구워낸 고소한 맛</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">모듬회</h4>
+              <span class="menu-item-price">시가</span>
+            </div>
+            <p class="menu-item-desc">신선한 제철 회를 모둠으로 즐기세요</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lunch Special -->
+    <section class="menu-category" id="lunch">
+      <div class="category-left">
+        <div class="category-sticky">
+          <h2 class="category-title">점심<br>특선</h2>
+          <p class="category-desc">평일 런치 타임에만 즐길 수 있는 특별 메뉴<br>11:30 AM — 2:30 PM</p>
+        </div>
+      </div>
+      <div class="category-right">
+        <div class="menu-items-grid">
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">점심 게정식 A</h4>
+              <span class="menu-item-price">₩55,000</span>
+            </div>
+            <p class="menu-item-desc">게장 + 계절반찬 + 된장찌개 + 공기밥</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">점심 게정식 B</h4>
+              <span class="menu-item-price">₩75,000</span>
+            </div>
+            <p class="menu-item-desc">게장 + 구이 + 계절반찬 + 된장찌개 + 공기밥</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">게살비빔밥</h4>
+              <span class="menu-item-price">₩38,000</span>
+            </div>
+            <p class="menu-item-desc">신선한 게살을 듬뿍 올린 비빔밥</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">해물순두부</h4>
+              <span class="menu-item-price">₩28,000</span>
+            </div>
+            <p class="menu-item-desc">해산물이 듬뿍 들어간 순두부찌개</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Drinks -->
+    <section class="menu-category" id="drinks">
+      <div class="category-left">
+        <div class="category-sticky">
+          <h2 class="category-title">주류 &<br>음료</h2>
+          <p class="category-desc">요리와 완벽한 페어링을 위한 음료 리스트</p>
+        </div>
+      </div>
+      <div class="category-right">
+        <div class="menu-items-grid">
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">소주</h4>
+              <span class="menu-item-price">₩8,000</span>
+            </div>
+            <p class="menu-item-desc">참이슬, 처음처럼</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">맥주</h4>
+              <span class="menu-item-price">₩10,000</span>
+            </div>
+            <p class="menu-item-desc">카스, 테라, 아사히</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">전통주</h4>
+              <span class="menu-item-price">₩15,000~</span>
+            </div>
+            <p class="menu-item-desc">막걸리, 청주, 과일주</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">와인</h4>
+              <span class="menu-item-price">₩80,000~</span>
+            </div>
+            <p class="menu-item-desc">레드, 화이트, 스파클링</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">음료</h4>
+              <span class="menu-item-price">₩5,000</span>
+            </div>
+            <p class="menu-item-desc">콜라, 사이다, 주스</p>
+          </div>
+          <div class="menu-item-card">
+            <div class="menu-item-top">
+              <h4 class="menu-item-name">전통차</h4>
+              <span class="menu-item-price">₩8,000</span>
+            </div>
+            <p class="menu-item-desc">매실차, 유자차, 대추차</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // Register ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Pin category titles while scrolling through items
+    document.querySelectorAll('.menu-category').forEach(category => {
+      const left = category.querySelector('.category-left');
+      const right = category.querySelector('.category-right');
+
+      if (window.innerWidth > 1024) {
+        ScrollTrigger.create({
+          trigger: category,
+          start: 'top 100px',
+          end: () => `+=${right.offsetHeight - left.offsetHeight}`,
+          pin: left,
+          pinSpacing: false
+        });
+      }
+    });
+
+    // Refresh on resize
+    window.addEventListener('resize', () => {
+      ScrollTrigger.refresh();
+    });
+  </script>
+</body>
+</html>

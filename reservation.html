@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예약하기 | 무화잠 MOOHWAJAM</title>
+  <meta name="description" content="무화잠 테이블 예약 - 외국인 및 한국인 고객을 위한 예약 시스템">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    .reservation-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-cream);
+    }
+
+    .reservation-header {
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--text-dark);
+      transition: opacity var(--transition-base);
+    }
+
+    .back-link:hover {
+      opacity: 0.6;
+    }
+
+    .back-link svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .reservation-logo {
+      font-size: 28px;
+      color: var(--primary);
+      font-weight: 300;
+    }
+
+    .reservation-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+    }
+
+    .reservation-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .reservation-card {
+      background-color: transparent;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      padding: 60px 48px;
+      text-align: center;
+      transition: all var(--transition-base);
+    }
+
+    .reservation-card:hover {
+      border-color: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .reservation-card-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+      letter-spacing: 0.05em;
+    }
+
+    .reservation-card-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .reservation-card-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      background-color: transparent;
+      border: 1px solid var(--text-dark);
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      color: var(--text-dark);
+      text-transform: uppercase;
+      overflow: hidden;
+      z-index: 1;
+      transition: color 0.6s ease;
+    }
+
+    .reservation-card-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 400px;
+      height: 400px;
+      background-color: var(--text-dark);
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.6s ease;
+      z-index: -1;
+    }
+
+    .reservation-card-btn:hover::before {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .reservation-card-btn:hover {
+      color: var(--white);
+    }
+
+    .reservation-card-btn svg {
+      width: 16px;
+      height: 16px;
+      transition: transform var(--transition-base);
+    }
+
+    .reservation-card-btn:hover svg {
+      transform: translateX(4px);
+    }
+
+    @media (max-width: 768px) {
+      .reservation-cards {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .reservation-card {
+        padding: 48px 32px;
+      }
+
+      .reservation-card-title {
+        font-size: 26px;
+      }
+
+      .reservation-header {
+        padding: 20px;
+      }
+
+      .reservation-main {
+        padding: 40px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="reservation-page">
+    <!-- Header -->
+    <header class="reservation-header">
+      <a href="index.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        <span>Back</span>
+      </a>
+      <a href="index.html" class="reservation-logo">潛</a>
+      <div style="width: 60px;"></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="reservation-main">
+      <div class="reservation-cards">
+        <!-- International Guests -->
+        <div class="reservation-card">
+          <h2 class="reservation-card-title">International Guests</h2>
+          <p class="reservation-card-desc">
+            Make a reservation in English through our international booking system.
+          </p>
+          <a href="https://www.catchtable.net/shop/moohwajam" target="_blank" rel="noopener noreferrer" class="reservation-card-btn">
+            <span>Reserve in English</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Korean Guests -->
+        <div class="reservation-card">
+          <h2 class="reservation-card-title">Korean Guests</h2>
+          <p class="reservation-card-desc">
+            Make a reservation in Korean through our local booking system.
+          </p>
+          <a href="https://app.catchtable.co.kr/ct/shop/moohwajam" target="_blank" rel="noopener noreferrer" class="reservation-card-btn">
+            <span>한국어로 예약하기</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
